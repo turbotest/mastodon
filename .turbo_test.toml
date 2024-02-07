@@ -45,7 +45,7 @@ sudo service postgresql restart
 sudo corepack enable
 corepack prepare
 yarn set version classic
-yes 1 | yarn install # auto-accept missing dependencies
+yes " " | yarn install # auto-accept missing dependencies
 
 # Install Ruby
 \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
