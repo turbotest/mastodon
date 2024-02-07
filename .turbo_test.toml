@@ -44,7 +44,8 @@ sudo service postgresql restart
 # Install Node
 sudo corepack enable
 corepack prepare
-yarn install
+yarn set version classic
+yes 1 | yarn install # auto-accept missing dependencies
 
 # Install Ruby
 \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
