@@ -24,43 +24,22 @@ sudo apt-add-repository -y 'deb https://dl.yarnpkg.com/debian/ stable main'
 # Add repo for NodeJS
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/nodesource.gpg
-NODE_MAJOR=20
+export NODE_MAJOR=20
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt-get update -y
 
 # Add packages to build and run Mastodon
 sudo sudo NEEDRESTART_MODE=a apt-get install \
-  git-core \
-  g++ \
-  libpq-dev \
-  libxml2-dev \
-  libxslt1-dev \
-  imagemagick \
-  nodejs \
-  redis-server \
-  redis-tools \
-  postgresql \
-  postgresql-contrib \
-  libicu-dev \
-  libidn11-dev \
-  libreadline6-dev \
-  autoconf \
-  bison \
-  build-essential \
-  ffmpeg \
-  file \
-  gcc \
-  libffi-dev \
-  libgdbm-dev \
-  libjemalloc-dev \
-  libncurses5-dev \
-  libprotobuf-dev \
-  libssl-dev \
-  libyaml-dev \
-  pkg-config \
-  protobuf-compiler \
-  zlib1g-dev \
+  git-core g++ libpq-dev libxml2-dev libxslt1-dev imagemagick nodejs \
+  redis-server redis-tools postgresql postgresql-contrib libicu-dev \
+  libidn11-dev libreadline6-dev autoconf bison build-essential ffmpeg file gcc \
+  libffi-dev libgdbm-dev libjemalloc-dev libncurses5-dev libprotobuf-dev \
+  libssl-dev libyaml-dev pkg-config protobuf-compiler zlib1g-dev \
   -y
+
+sudo su postgres -c "createuser $USER --superuser"
+echo 'host all all 127.0.0.1/32 trust' | sudo tee -a /etc/postgresql/14/main/pg_hba.conf
+sudo service postgresql restart
 
 # Install Node
 sudo corepack enable
